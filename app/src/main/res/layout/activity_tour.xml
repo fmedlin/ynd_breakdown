@@ -13,7 +13,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        style="?android:attr/textAppearanceSmall"
+        style="?android:attr/textAppearanceMedium"
         android:id="@+id/skip"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="wrap_content"

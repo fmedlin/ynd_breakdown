@@ -3,4 +3,96 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/color_box"
+        android:src="@drawable/ic_color_box"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/camera"
+        android:src="@drawable/ic_camera_icon"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/color_box"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pie_chart"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/ic_pie_chart"
+        android:layout_below="@+id/camera"
+        android:layout_toStartOf="@+id/camera"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/analysis"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/ic_line_icon"
+        android:layout_below="@+id/pie_chart"
+        android:layout_toEndOf="@+id/pie_chart"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/music"
+        android:src="@drawable/ic_music_note"
+        android:layout_alignBottom="@+id/color_box"
+        android:layout_alignStart="@+id/analysis"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/quotes"
+        android:src="@drawable/ic_quote_icon"
+        android:layout_marginEnd="49dp"
+        android:layout_above="@+id/pie_chart"
+        android:layout_alignParentEnd="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/location"
+        android:src="@drawable/ic_location_icon"
+        android:layout_alignTop="@+id/pie_chart"
+        android:layout_alignEnd="@+id/quotes"
+        android:layout_marginEnd="15dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dubya"
+        android:src="@drawable/ic_w_icon"
+        android:layout_above="@+id/music"
+        android:layout_alignStart="@+id/quotes"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="We collect the best pieces from around the web and combine them into a story."
+        android:id="@+id/body"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Comprehensive"
+        android:id="@+id/title"
+        android:layout_above="@+id/body"
+        android:layout_marginBottom="21dp"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
