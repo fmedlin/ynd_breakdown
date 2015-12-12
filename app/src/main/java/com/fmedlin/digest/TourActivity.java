@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,8 +65,8 @@ public class TourActivity extends AppCompatActivity {
             }
 
             ViewGroup layout = (ViewGroup) LayoutInflater.from(context).inflate(screen.getLayoutResId(), container, false);
-            screen.bindLayout(layout);
             container.addView(layout);
+            screen.bindLayout(layout);
 
             return layout;
         }
@@ -106,6 +109,9 @@ public class TourActivity extends AppCompatActivity {
 
     public class TourScreenOne extends TourScreen {
 
+        @Bind({R.id.camera, R.id.pie_chart, R.id.analysis, R.id.music, R.id.quotes, R.id.location, R.id.dubya})
+        List<ImageView> icons;
+        int[] sequence = new int[] {1, 4, 3, 2, 6, 5, 4};
 
         public TourScreenOne(Context context) {
             super(context);
@@ -119,8 +125,17 @@ public class TourActivity extends AppCompatActivity {
         @Override
         public void bindLayout(ViewGroup layout) {
             ButterKnife.bind(this, layout);
+            ButterKnife.apply(icons, FADEIN);
         }
 
+        ButterKnife.Action<View> FADEIN = new ButterKnife.Action<View>() {
+            @Override
+            public void apply(final View view, int index) {
+                view.animate()
+                        .alpha(1.0f)
+                        .setStartDelay(sequence[index] * 200L);
+            }
+        };
     }
 
     public class TourScreenTwo extends TourScreen {
@@ -156,4 +171,5 @@ public class TourActivity extends AppCompatActivity {
         public void bindLayout(ViewGroup layout) {
         }
     }
+
 }
