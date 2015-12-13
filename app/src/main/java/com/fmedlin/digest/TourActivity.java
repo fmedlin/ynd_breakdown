@@ -16,10 +16,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnPageChange;
 
 public class TourActivity extends AppCompatActivity {
 
     @Bind(R.id.viewpager) ViewPager pager;
+    TourPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,8 @@ public class TourActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tour);
         ButterKnife.bind(this);
 
-        pager.setAdapter(new TourPagerAdapter(this));
+        adapter = new TourPagerAdapter(this);
+        pager.setAdapter(adapter);
     }
 
     @OnClick(R.id.skip)
@@ -35,9 +38,38 @@ public class TourActivity extends AppCompatActivity {
         finish();
     }
 
+    @OnPageChange(R.id.viewpager)
+    public void onPageSelected(int page) {
+        TourScreenOne screen1;
+
+        switch (page) {
+            case 0:
+                screen1 = (TourScreenOne) adapter.getItem(0);
+                if (screen1 != null) {
+                    screen1.showIcons();
+                }
+                break;
+
+            case 1:
+                screen1 = (TourScreenOne) adapter.getItem(0);
+                if (screen1 != null) {
+                    screen1.hideIcons();
+                }
+                break;
+
+            case 2:
+                break;
+
+            default:
+                break;
+        }
+    }
+
     class TourPagerAdapter extends PagerAdapter {
 
         Context context;
+        int pageCount = 3;
+        TourScreen[] screens = new TourScreen[pageCount];
 
         public TourPagerAdapter(Context context) {
             this.context = context;
@@ -67,23 +99,30 @@ public class TourActivity extends AppCompatActivity {
             ViewGroup layout = (ViewGroup) LayoutInflater.from(context).inflate(screen.getLayoutResId(), container, false);
             container.addView(layout);
             screen.bindLayout(layout);
+            screens[position] = screen;
 
             return layout;
         }
 
+
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+            screens[position] = null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return pageCount;
         }
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
+        }
+
+        public TourScreen getItem(int position) {
+            return screens[position];
         }
     }
 
@@ -125,8 +164,17 @@ public class TourActivity extends AppCompatActivity {
         @Override
         public void bindLayout(ViewGroup layout) {
             ButterKnife.bind(this, layout);
+            showIcons();
+        }
+
+        public void showIcons() {
             ButterKnife.apply(icons, FADEIN);
         }
+
+        public void hideIcons() {
+            ButterKnife.apply(icons, TRANSPARENT);
+        }
+
 
         ButterKnife.Action<View> FADEIN = new ButterKnife.Action<View>() {
             @Override
@@ -136,6 +184,14 @@ public class TourActivity extends AppCompatActivity {
                         .setStartDelay(sequence[index] * 200L);
             }
         };
+
+        ButterKnife.Action<View> TRANSPARENT = new ButterKnife.Action<View>() {
+            @Override
+            public void apply(final View view, int index) {
+                view.setAlpha(0f);
+            }
+        };
+
     }
 
     public class TourScreenTwo extends TourScreen {
