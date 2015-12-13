@@ -17,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
+import butterknife.OnPageChange.Callback;
 
 public class TourActivity extends AppCompatActivity {
 
@@ -40,28 +41,43 @@ public class TourActivity extends AppCompatActivity {
 
     @OnPageChange(R.id.viewpager)
     public void onPageSelected(int page) {
-        TourScreenOne screen1;
 
         switch (page) {
             case 0:
-                screen1 = (TourScreenOne) adapter.getItem(0);
-                if (screen1 != null) {
-                    screen1.showIcons();
-                }
+                onEnter(0);
                 break;
 
             case 1:
-                screen1 = (TourScreenOne) adapter.getItem(0);
-                if (screen1 != null) {
-                    screen1.hideIcons();
-                }
+                onExit(0);
+                onEnter(1);
                 break;
 
             case 2:
+                onExit(1);
+                onEnter(2);
                 break;
 
             default:
                 break;
+        }
+    }
+
+    @OnPageChange(value = R.id.viewpager, callback = Callback.PAGE_SCROLLED)
+    public void onPageScrolled(int position, float positionOffset, int pixelOffset) {
+
+    }
+
+    private void onEnter(int page) {
+        TourScreen screen = adapter.getItem(page);
+        if (screen != null) {
+            screen.onEnter();
+        }
+    }
+
+    private void onExit(int page) {
+        TourScreen screen = adapter.getItem(page);
+        if (screen != null) {
+            screen.onExit();
         }
     }
 
@@ -81,15 +97,15 @@ public class TourActivity extends AppCompatActivity {
 
             switch(position) {
                 case 0:
-                    screen = new TourScreenOne(context);
+                    screen = new TourScreenZero(context);
                     break;
 
                 case 1:
-                    screen = new TourScreenTwo(context);
+                    screen = new TourScreenOne(context);
                     break;
 
                 case 2:
-                    screen = new TourScreenThree(context);
+                    screen = new TourScreenTwo(context);
                     break;
 
                 default:
@@ -144,27 +160,46 @@ public class TourActivity extends AppCompatActivity {
         public ViewGroup getLayout() {
             return layout;
         }
+
+        public void onEnter() {
+            // nop
+        }
+
+        public void onExit() {
+            // nop
+        }
+
     }
 
-    public class TourScreenOne extends TourScreen {
+    public class TourScreenZero extends TourScreen {
 
         @Bind({R.id.camera, R.id.pie_chart, R.id.analysis, R.id.music, R.id.quotes, R.id.location, R.id.dubya})
         List<ImageView> icons;
         int[] sequence = new int[] {1, 4, 3, 2, 6, 5, 4};
 
-        public TourScreenOne(Context context) {
+        public TourScreenZero(Context context) {
             super(context);
         }
 
         @Override
         public int getLayoutResId() {
-            return R.layout.view_tour_page1;
+            return R.layout.view_tour_page0;
         }
 
         @Override
         public void bindLayout(ViewGroup layout) {
             ButterKnife.bind(this, layout);
+            onEnter();
+        }
+
+        @Override
+        public void onEnter() {
             showIcons();
+        }
+
+        @Override
+        public void onExit() {
+            hideIcons();
         }
 
         public void showIcons() {
@@ -174,7 +209,6 @@ public class TourActivity extends AppCompatActivity {
         public void hideIcons() {
             ButterKnife.apply(icons, TRANSPARENT);
         }
-
 
         ButterKnife.Action<View> FADEIN = new ButterKnife.Action<View>() {
             @Override
@@ -194,15 +228,15 @@ public class TourActivity extends AppCompatActivity {
 
     }
 
-    public class TourScreenTwo extends TourScreen {
+    public class TourScreenOne extends TourScreen {
 
-        public TourScreenTwo(Context context) {
+        public TourScreenOne(Context context) {
             super(context);
         }
 
         @Override
         public int getLayoutResId() {
-            return R.layout.view_tour_page2;
+            return R.layout.view_tour_page1;
         }
 
         @Override
@@ -212,15 +246,15 @@ public class TourActivity extends AppCompatActivity {
 
     }
 
-    public class TourScreenThree extends TourScreen {
+    public class TourScreenTwo extends TourScreen {
 
-        public TourScreenThree(Context context) {
+        public TourScreenTwo(Context context) {
             super(context);
         }
 
         @Override
         public int getLayoutResId() {
-            return R.layout.view_tour_page3;
+            return R.layout.view_tour_page2;
         }
 
         @Override
