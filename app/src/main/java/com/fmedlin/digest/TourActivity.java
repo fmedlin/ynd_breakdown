@@ -64,7 +64,7 @@ public class TourActivity extends AppCompatActivity {
 
     @OnPageChange(value = R.id.viewpager, callback = Callback.PAGE_SCROLLED)
     public void onPageScrolled(int position, float positionOffset, int pixelOffset) {
-
+        onPageScrolled(position, pixelOffset);
     }
 
     private void onEnter(int page) {
@@ -78,6 +78,13 @@ public class TourActivity extends AppCompatActivity {
         TourScreen screen = adapter.getItem(page);
         if (screen != null) {
             screen.onExit();
+        }
+    }
+
+    private void onPageScrolled(int page, int pixelOffset) {
+        TourScreen screen = adapter.getItem(page);
+        if (screen != null) {
+            screen.onPageScrolled(pixelOffset);
         }
     }
 
@@ -169,13 +176,19 @@ public class TourActivity extends AppCompatActivity {
             // nop
         }
 
+        public void onPageScrolled(int pixelOffset) {
+            // nop
+        }
     }
 
     public class TourScreenZero extends TourScreen {
 
         @Bind({R.id.camera, R.id.pie_chart, R.id.analysis, R.id.music, R.id.quotes, R.id.location, R.id.dubya})
         List<ImageView> icons;
+
         int[] sequence = new int[] {1, 4, 3, 2, 6, 5, 4};
+        float[] parallax = new float[] {0.2f, 0.3f, 0.3f, 0.3f, -0.2f, -1f, -0.2f};
+        int pixelOffset;
 
         public TourScreenZero(Context context) {
             super(context);
@@ -189,8 +202,16 @@ public class TourActivity extends AppCompatActivity {
         @Override
         public void bindLayout(ViewGroup layout) {
             ButterKnife.bind(this, layout);
+            ButterKnife.apply(icons, LOCATE);
             onEnter();
         }
+
+        ButterKnife.Action<View> LOCATE = new ButterKnife.Action<View>() {
+            @Override
+            public void apply(final View view, int index) {
+                view.setTag(view.getLeft());
+            }
+        };
 
         @Override
         public void onEnter() {
@@ -226,6 +247,19 @@ public class TourActivity extends AppCompatActivity {
             }
         };
 
+        @Override
+        public void onPageScrolled(int pixelOffset) {
+            this.pixelOffset = pixelOffset;
+            ButterKnife.apply(icons, PARALLAX);
+        }
+
+        ButterKnife.Action<View> PARALLAX = new ButterKnife.Action<View>() {
+            @Override
+            public void apply(final View view, int index) {
+                view.setTranslationX(parallax[index] * pixelOffset);
+            }
+        };
+
     }
 
     public class TourScreenOne extends TourScreen {
@@ -243,7 +277,6 @@ public class TourActivity extends AppCompatActivity {
         public void bindLayout(ViewGroup layout) {
             ButterKnife.bind(this, layout);
         }
-
     }
 
     public class TourScreenTwo extends TourScreen {
