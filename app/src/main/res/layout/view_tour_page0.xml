@@ -8,6 +8,17 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/analysis"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/ic_line_icon"
+        android:layout_below="@+id/pie_chart"
+        android:layout_toEndOf="@+id/pie_chart"
+        android:alpha="0"
+        tools:visibility="visible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/color_box"
         android:src="@drawable/ic_color_box"
         android:layout_centerHorizontal="true"
@@ -33,17 +44,6 @@
         android:src="@drawable/ic_pie_chart"
         android:layout_below="@+id/camera"
         android:layout_toStartOf="@+id/camera"
-        android:alpha="0"
-        tools:visibility="visible"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/analysis"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/ic_line_icon"
-        android:layout_below="@+id/pie_chart"
-        android:layout_toEndOf="@+id/pie_chart"
         android:alpha="0"
         tools:visibility="visible"/>
 
