@@ -22,16 +22,22 @@ import butterknife.OnPageChange.Callback;
 public class TourActivity extends AppCompatActivity {
 
     @Bind(R.id.viewpager) ViewPager pager;
+    @Bind({R.id.page0, R.id.page1, R.id.page2}) List<ImageView> pageIndicators;
+
     TourPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour);
-        ButterKnife.bind(this);
+        setupViews();
+    }
 
+    private void setupViews() {
+        ButterKnife.bind(this);
         adapter = new TourPagerAdapter(this);
         pager.setAdapter(adapter);
+        ButterKnife.apply(pageIndicators, INDICATE_PAGE, 0);
     }
 
     @OnClick(R.id.skip)
@@ -41,6 +47,7 @@ public class TourActivity extends AppCompatActivity {
 
     @OnPageChange(R.id.viewpager)
     public void onPageSelected(int page) {
+        ButterKnife.apply(pageIndicators, INDICATE_PAGE, page);
 
         switch (page) {
             case 0:
@@ -62,10 +69,13 @@ public class TourActivity extends AppCompatActivity {
         }
     }
 
-    @OnPageChange(value = R.id.viewpager, callback = Callback.PAGE_SCROLLED)
-    public void onPageScrolled(int position, float positionOffset, int pixelOffset) {
-        onPageScrolled(position, pixelOffset);
-    }
+    ButterKnife.Setter<View, Integer> INDICATE_PAGE = new ButterKnife.Setter<View, Integer>() {
+        @Override
+        public void set(final View view, Integer page, int index) {
+            ImageView indicator = (ImageView) view;
+            indicator.setImageResource(page == index ? R.drawable.ic_page_on : R.drawable.ic_page_off);
+        }
+    };
 
     private void onEnter(int page) {
         TourScreen screen = adapter.getItem(page);
@@ -79,6 +89,11 @@ public class TourActivity extends AppCompatActivity {
         if (screen != null) {
             screen.onExit();
         }
+    }
+
+    @OnPageChange(value = R.id.viewpager, callback = Callback.PAGE_SCROLLED)
+    public void onPageScrolled(int position, float positionOffset, int pixelOffset) {
+        onPageScrolled(position, pixelOffset);
     }
 
     private void onPageScrolled(int page, int pixelOffset) {
