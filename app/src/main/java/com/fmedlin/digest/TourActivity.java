@@ -21,6 +21,8 @@ import butterknife.OnPageChange.Callback;
 
 public class TourActivity extends AppCompatActivity {
 
+    static int LAST_POSITION = -1;
+
     @Bind(R.id.viewpager) ViewPager pager;
     @Bind({R.id.page0, R.id.page1, R.id.page2}) List<ImageView> pageIndicators;
 
@@ -51,22 +53,25 @@ public class TourActivity extends AppCompatActivity {
 
         switch (page) {
             case 0:
+                onExit(LAST_POSITION);
                 onEnter(0);
                 break;
 
             case 1:
-                onExit(0);
+                onExit(LAST_POSITION);
                 onEnter(1);
                 break;
 
             case 2:
-                onExit(1);
+                onExit(LAST_POSITION);
                 onEnter(2);
                 break;
 
             default:
-                break;
+                return;
         }
+
+        LAST_POSITION = page;
     }
 
     ButterKnife.Setter<View, Integer> INDICATE_PAGE = new ButterKnife.Setter<View, Integer>() {
@@ -85,9 +90,11 @@ public class TourActivity extends AppCompatActivity {
     }
 
     private void onExit(int page) {
-        TourScreen screen = adapter.getItem(page);
-        if (screen != null) {
-            screen.onExit();
+        if (page >= 0) {
+            TourScreen screen = adapter.getItem(page);
+            if (screen != null) {
+                screen.onExit();
+            }
         }
     }
 
@@ -217,32 +224,16 @@ public class TourActivity extends AppCompatActivity {
         @Override
         public void bindLayout(ViewGroup layout) {
             ButterKnife.bind(this, layout);
-            ButterKnife.apply(icons, LOCATE);
             onEnter();
         }
 
-        ButterKnife.Action<View> LOCATE = new ButterKnife.Action<View>() {
-            @Override
-            public void apply(final View view, int index) {
-                view.setTag(view.getLeft());
-            }
-        };
-
         @Override
         public void onEnter() {
-            showIcons();
+            ButterKnife.apply(icons, FADEIN);
         }
 
         @Override
         public void onExit() {
-            hideIcons();
-        }
-
-        public void showIcons() {
-            ButterKnife.apply(icons, FADEIN);
-        }
-
-        public void hideIcons() {
             ButterKnife.apply(icons, TRANSPARENT);
         }
 
@@ -279,6 +270,9 @@ public class TourActivity extends AppCompatActivity {
 
     public class TourScreenOne extends TourScreen {
 
+        @Bind({R.id.blue_paragraph, R.id.red_paragraph, R.id.orange_paragraph, R.id.green_paragraph})
+        List<ImageView> paragraphs;
+
         public TourScreenOne(Context context) {
             super(context);
         }
@@ -292,6 +286,31 @@ public class TourActivity extends AppCompatActivity {
         public void bindLayout(ViewGroup layout) {
             ButterKnife.bind(this, layout);
         }
+
+        public void onEnter() {
+            ButterKnife.apply(paragraphs, FADEIN);
+        }
+
+        ButterKnife.Action<View> FADEIN = new ButterKnife.Action<View>() {
+            @Override
+            public void apply(final View view, int index) {
+                view.animate()
+                        .alpha(1.0f)
+                        .setStartDelay((index + 1) * 250L);
+            }
+        };
+
+        public void onExit() {
+            ButterKnife.apply(paragraphs, TRANSPARENT);
+        }
+
+        ButterKnife.Action<View> TRANSPARENT = new ButterKnife.Action<View>() {
+            @Override
+            public void apply(final View view, int index) {
+                view.setAlpha(0f);
+            }
+        };
+
     }
 
     public class TourScreenTwo extends TourScreen {

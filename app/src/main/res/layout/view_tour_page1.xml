@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:id="@+id/sheets"
+        android:src="@drawable/sheets"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/sheets"
+        android:layout_alignTop="@id/sheets"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true">
+        <ImageView
+            android:id="@+id/blue_paragraph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:alpha="0"
+            android:src="@drawable/blue_paragraph"/>
+
+        <ImageView
+            android:id="@+id/red_paragraph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:alpha="0"
+            android:src="@drawable/red_paragraph"/>
+
+        <ImageView
+            android:id="@+id/orange_paragraph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:alpha="0"
+            android:src="@drawable/orange_paragraph"/>
+
+        <ImageView
+            android:id="@+id/green_paragraph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:src="@drawable/green_paragraph"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Top stories delivered to you twice daily at times you choose."
+        android:id="@+id/body"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Twice a day"
+        android:id="@+id/title"
+        android:layout_above="@+id/body"
+        android:layout_marginBottom="21dp"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
