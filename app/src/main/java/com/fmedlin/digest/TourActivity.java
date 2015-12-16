@@ -291,8 +291,8 @@ public class TourActivity extends AppCompatActivity {
         }
 
         private void setupSatellites() {
-            orbit.addSatellite(R.drawable.sun, 0f);
-            orbit.addSatellite(R.drawable.half_moon, 0.5f);
+            orbit.addSatellite(R.drawable.sun, 0.65f);
+            orbit.addSatellite(R.drawable.half_moon, 0.15f);
         }
 
 

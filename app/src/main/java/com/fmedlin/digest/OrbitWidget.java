@@ -66,7 +66,7 @@ public class OrbitWidget extends View {
                 position = 0f;
             }
 
-            pathMeasure.getPosTan(position += 10, coord, null);
+            pathMeasure.getPosTan(position, coord, null);
             c.drawBitmap(satellite.bitmap,
                     coord[0] - satellite.bitmap.getWidth() / 2,
                     coord[1] - satellite.bitmap.getHeight() / 2,
@@ -75,7 +75,6 @@ public class OrbitWidget extends View {
             satellite.position = position;
         }
 
-        invalidate();
     }
 
     private Path setupPath(float x, float y, float radius) {
