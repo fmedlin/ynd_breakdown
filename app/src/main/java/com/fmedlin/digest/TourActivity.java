@@ -273,6 +273,8 @@ public class TourActivity extends AppCompatActivity {
         @Bind({R.id.blue_paragraph, R.id.red_paragraph, R.id.orange_paragraph, R.id.green_paragraph})
         List<ImageView> paragraphs;
 
+        @Bind(R.id.orbit) OrbitWidget orbit;
+
         public TourScreenOne(Context context) {
             super(context);
         }
@@ -285,7 +287,14 @@ public class TourActivity extends AppCompatActivity {
         @Override
         public void bindLayout(ViewGroup layout) {
             ButterKnife.bind(this, layout);
+            setupSatellites();
         }
+
+        private void setupSatellites() {
+            orbit.addSatellite(R.drawable.sun, 0f);
+            orbit.addSatellite(R.drawable.half_moon, 0.5f);
+        }
+
 
         public void onEnter() {
             ButterKnife.apply(paragraphs, FADEIN);
