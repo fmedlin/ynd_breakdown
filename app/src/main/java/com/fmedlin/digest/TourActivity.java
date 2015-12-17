@@ -100,13 +100,20 @@ public class TourActivity extends AppCompatActivity {
 
     @OnPageChange(value = R.id.viewpager, callback = Callback.PAGE_SCROLLED)
     public void onPageScrolled(int position, float positionOffset, int pixelOffset) {
-        onPageScrolled(position, pixelOffset);
+        onPageScroll(position, positionOffset, pixelOffset);
     }
 
-    private void onPageScrolled(int page, int pixelOffset) {
+    private void onPageScroll(int page, float positionOffset, int pixelOffset) {
         TourScreen screen = adapter.getItem(page);
         if (screen != null) {
-            screen.onPageScrolled(pixelOffset);
+            screen.onPageScrolled(positionOffset, pixelOffset);
+
+            if (page == 0) {
+                TourScreen screen1 = adapter.getItem(1);
+                if (screen1 != null) {
+                    screen1.onPageScrolled(positionOffset, 0);
+                }
+            }
         }
     }
 
@@ -198,7 +205,7 @@ public class TourActivity extends AppCompatActivity {
             // nop
         }
 
-        public void onPageScrolled(int pixelOffset) {
+        public void onPageScrolled(float positionOffset, int pixelOffset) {
             // nop
         }
     }
@@ -254,7 +261,7 @@ public class TourActivity extends AppCompatActivity {
         };
 
         @Override
-        public void onPageScrolled(int pixelOffset) {
+        public void onPageScrolled(float positionOffset, int pixelOffset) {
             this.pixelOffset = pixelOffset;
             ButterKnife.apply(icons, PARALLAX);
         }
@@ -274,6 +281,7 @@ public class TourActivity extends AppCompatActivity {
         List<ImageView> paragraphs;
 
         @Bind(R.id.orbit) OrbitWidget orbit;
+        float positionOffset = 0f;
 
         public TourScreenOne(Context context) {
             super(context);
@@ -320,6 +328,10 @@ public class TourActivity extends AppCompatActivity {
             }
         };
 
+        @Override
+        public void onPageScrolled(float positionOffset, int pixelOffset) {
+            orbit.setPositionOffset(positionOffset);
+        }
     }
 
     public class TourScreenTwo extends TourScreen {

@@ -24,6 +24,7 @@ public class OrbitWidget extends View {
     PathMeasure pathMeasure;
     List<Satellite> satellites;
     float[] coord = new float[2];
+    float positionOffset = 0f;
 
     public OrbitWidget(Context context) {
         this(context, null);
@@ -61,9 +62,11 @@ public class OrbitWidget extends View {
         }
 
         for (Satellite satellite : getSatellites()) {
-            float position = satellite.getPosition();
-            if (position > pathMeasure.getLength()) {
-                position = 0f;
+            float pathLength = pathMeasure.getLength();
+            float position = satellite.getPosition() + pathMeasure.getLength() * positionOffset;
+
+            if (position > pathLength) {
+                position -= pathLength;
             }
 
             pathMeasure.getPosTan(position, coord, null);
@@ -72,7 +75,6 @@ public class OrbitWidget extends View {
                     coord[1] - satellite.bitmap.getHeight() / 2,
                     null);
 
-            satellite.position = position;
         }
 
     }
@@ -82,6 +84,11 @@ public class OrbitWidget extends View {
         path.addCircle(x, y, radius, Direction.CW);
         pathMeasure = new PathMeasure(path, true);
         return path;
+    }
+
+    public void setPositionOffset(float positionOffset) {
+        this.positionOffset = positionOffset;
+        invalidate();
     }
 
     public void addSatellite(@DrawableRes int res, float pct) {
