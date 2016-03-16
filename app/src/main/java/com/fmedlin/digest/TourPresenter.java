@@ -6,6 +6,7 @@ public class TourPresenter {
 
     public TourPresenter(TourView view) {
         this.view = view;
+        view.setPagerAdapter(new TourPagerAdapter(view.getActivity()));
         view.startScreenZero();
     }
 }

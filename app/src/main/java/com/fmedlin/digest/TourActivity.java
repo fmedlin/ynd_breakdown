@@ -1,15 +1,8 @@
 package com.fmedlin.digest;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageView;
 
-import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 import butterknife.OnPageChange.Callback;
@@ -18,24 +11,30 @@ public class TourActivity extends AppCompatActivity {
 
     static int LAST_POSITION = -1;
 
-    @Bind(R.id.viewpager) ViewPager pager;
-    @Bind({R.id.page0, R.id.page1, R.id.page2}) List<ImageView> pageIndicators;
+    //@Bind(R.id.viewpager) ViewPager pager;
+    //@Bind({R.id.page0, R.id.page1, R.id.page2}) List<ImageView> pageIndicators;
 
+    TourPresenter presenter;
     TourPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour);
-        setupViews();
+        createPresenter();
+        //setupViews();
     }
 
-    private void setupViews() {
+    private void createPresenter() {
+       presenter = new TourPresenter(new TourView(this));
+    }
+
+    /*private void setupViews() {
         ButterKnife.bind(this);
         adapter = new TourPagerAdapter(this);
         pager.setAdapter(adapter);
         ButterKnife.apply(pageIndicators, INDICATE_PAGE, 0);
-    }
+    }*/
 
     @OnClick(R.id.skip)
     public void onClick() {
@@ -44,7 +43,7 @@ public class TourActivity extends AppCompatActivity {
 
     @OnPageChange(R.id.viewpager)
     public void onPageSelected(int page) {
-        ButterKnife.apply(pageIndicators, INDICATE_PAGE, page);
+        //ButterKnife.apply(pageIndicators, INDICATE_PAGE, page);
 
         switch (page) {
             case 0:
@@ -69,13 +68,13 @@ public class TourActivity extends AppCompatActivity {
         LAST_POSITION = page;
     }
 
-    ButterKnife.Setter<View, Integer> INDICATE_PAGE = new ButterKnife.Setter<View, Integer>() {
+    /*ButterKnife.Setter<View, Integer> INDICATE_PAGE = new ButterKnife.Setter<View, Integer>() {
         @Override
         public void set(final View view, Integer page, int index) {
             ImageView indicator = (ImageView) view;
             indicator.setImageResource(page == index ? R.drawable.ic_page_on : R.drawable.ic_page_off);
         }
-    };
+    };*/
 
     private void onEnter(int page) {
         TourScreen screen = adapter.getItem(page);
