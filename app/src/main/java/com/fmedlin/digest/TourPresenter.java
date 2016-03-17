@@ -1,7 +1,10 @@
 package com.fmedlin.digest;
 
+import android.app.Activity;
+
 import com.fmedlin.digest.TourView.PageScrolledEvent;
 import com.fmedlin.digest.TourView.PageSelectedEvent;
+import com.fmedlin.digest.TourView.SkipEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -35,6 +38,14 @@ public class TourPresenter {
         view.scrollPage(page, event.getPositionOffset(), event.getPixelOffset());
         if (page == 0) {
             view.scrollPage(1, event.getPositionOffset(), 0);
+        }
+    }
+
+    @Subscribe
+    public void onSkip(SkipEvent event) {
+        Activity activity = view.getActivity();
+        if (activity != null) {
+            activity.finish();
         }
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnPageChange;
 import butterknife.OnPageChange.Callback;
 
@@ -83,6 +84,10 @@ public class TourView {
         bus.post(new PageScrolledEvent(page, positionOffset, pixelOffset));
     }
 
+    @OnClick(R.id.skip)
+    public void onClick() {
+        bus.post(new SkipEvent());
+    }
 
     ButterKnife.Setter<View, Integer> INDICATE_PAGE = new ButterKnife.Setter<View, Integer>() {
         @Override
@@ -129,4 +134,6 @@ public class TourView {
             return pixelOffset;
         }
     }
+
+    public static class SkipEvent { }
 }

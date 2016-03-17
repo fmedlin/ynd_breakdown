@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.squareup.otto.Bus;
 
-import butterknife.OnClick;
-
 public class TourActivity extends AppCompatActivity {
 
     TourPresenter presenter;
@@ -37,10 +35,5 @@ public class TourActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         BusProvider.register(presenter);
-    }
-
-    @OnClick(R.id.skip)
-    public void onClick() {
-        finish();
     }
 }
