@@ -3,6 +3,7 @@ package com.fmedlin.digest;
 import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.ButterKnife.Setter;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 import butterknife.OnPageChange.Callback;
@@ -66,10 +68,22 @@ public class TourView {
         }
     }
 
-    public void scrollPage(int page, float positionOffset, int pixelOffset) {
+    /**
+     * @param page - page to scroll
+     * @param currentPage - current page
+     * @param positionOffset
+     * @param pixelOffset
+     */
+    public void scrollPage(int page, int currentPage, float positionOffset, int pixelOffset) {
         TourScreen screen = adapter.getItem(page);
         if (screen != null) {
             screen.onPageScrolled(positionOffset, pixelOffset);
+        }
+
+        // Animate page indicator alpha when scrolling between page one and two
+        if (page == 1 && currentPage >= 1) {
+            Log.d("TS1", "position=" + positionOffset + ", pixel=" + pixelOffset);
+            ButterKnife.apply(pageIndicators, ALPHA, 1.0f - positionOffset);
         }
     }
 
@@ -94,6 +108,13 @@ public class TourView {
         public void set(final View view, Integer page, int index) {
             ImageView indicator = (ImageView) view;
             indicator.setImageResource(page == index ? R.drawable.ic_page_on : R.drawable.ic_page_off);
+        }
+    };
+
+    ButterKnife.Setter<View, Float> ALPHA = new Setter<View, Float>() {
+        @Override
+        public void set(View view, Float value, int index) {
+            view.setAlpha(value);
         }
     };
 

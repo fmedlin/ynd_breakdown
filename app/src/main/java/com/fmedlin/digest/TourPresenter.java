@@ -36,9 +36,9 @@ public class TourPresenter {
     public void onPageScrolled(PageScrolledEvent event) {
         int page = event.getPage();
 
-        view.scrollPage(page, event.getPositionOffset(), event.getPixelOffset());
+        view.scrollPage(page, page, event.getPositionOffset(), event.getPixelOffset());
         if (page == 0) {
-            view.scrollPage(1, event.getPositionOffset(), 0);
+            view.scrollPage(1, page, event.getPositionOffset(), 0);
         }
     }
 
