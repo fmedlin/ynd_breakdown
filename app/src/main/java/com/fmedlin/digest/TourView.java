@@ -3,7 +3,6 @@ package com.fmedlin.digest;
 import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -82,7 +81,6 @@ public class TourView {
 
         // Animate page indicator alpha when scrolling between page one and two
         if (page == 1 && currentPage >= 1) {
-            Log.d("TS1", "position=" + positionOffset + ", pixel=" + pixelOffset);
             ButterKnife.apply(pageIndicators, ALPHA, 1.0f - positionOffset);
         }
     }

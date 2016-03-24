@@ -17,10 +17,13 @@ import java.util.List;
 
 public class JuggleWidget extends View {
 
+    private static final Float ADVANCE = 10f;
+
     Path path;
     PathMeasure pathMeasure;
     List<Satellite> satellites;
     float[] coord = new float[2];
+    float offset = 0.0f;
 
     public JuggleWidget(Context context) {
         this(context, null);
@@ -55,7 +58,7 @@ public class JuggleWidget extends View {
 
         for (Satellite satellite : satellites) {
             float pathLength = pathMeasure.getLength();
-            float position = satellite.getPosition();
+            float position = satellite.getPosition() + offset;
 
             if (position > pathLength) {
                 position -= pathLength;
@@ -92,6 +95,14 @@ public class JuggleWidget extends View {
         }
 
         return satellites;
+    }
+
+    public void advance() {
+        offset += ADVANCE;
+        if (offset > pathMeasure.getLength()) {
+            offset -= pathMeasure.getLength();
+        }
+        invalidate();
     }
 
     private void repositionSatellites() {
