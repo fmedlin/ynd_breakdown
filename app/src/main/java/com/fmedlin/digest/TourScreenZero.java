@@ -31,16 +31,16 @@ public class TourScreenZero extends TourScreen {
     @Override
     public void bindLayout(ViewGroup layout) {
         ButterKnife.bind(this, layout);
-        onEnter();
+        onEnter(true);
     }
 
     @Override
-    public void onEnter() {
+    public void onEnter(boolean isAdvancing) {
         ButterKnife.apply(icons, FADEIN);
     }
 
     @Override
-    public void onExit() {
+    public void onExit(boolean isAdvancing) {
         ButterKnife.apply(icons, TRANSPARENT);
     }
 

@@ -38,8 +38,8 @@ public class TourScreenOne extends TourScreen {
         orbit.addSatellite(R.drawable.half_moon, 0.15f);
     }
 
-
-    public void onEnter() {
+    @Override
+    public void onEnter(boolean isAdvancing) {
         ButterKnife.apply(paragraphs, FADEIN);
     }
 
@@ -52,7 +52,8 @@ public class TourScreenOne extends TourScreen {
         }
     };
 
-    public void onExit() {
+    @Override
+    public void onExit(boolean isAdvancing) {
         ButterKnife.apply(paragraphs, TRANSPARENT);
     }
 

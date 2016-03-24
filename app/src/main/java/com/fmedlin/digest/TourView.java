@@ -50,18 +50,18 @@ public class TourView {
         ButterKnife.apply(pageIndicators, INDICATE_PAGE, 0);
     }
 
-    public void enterScreen(int page) {
+    public void enterScreen(int page, boolean isAdvancing) {
         TourScreen screen = adapter.getItem(page);
         if (screen != null) {
-            screen.onEnter();
+            screen.onEnter(isAdvancing);
         }
     }
 
-    public void exitScreen(int page) {
+    public void exitScreen(int page, boolean isAdvancing) {
         if (page >= 0) {
             TourScreen screen = adapter.getItem(page);
             if (screen != null) {
-                screen.onExit();
+                screen.onExit(isAdvancing);
             }
         }
     }

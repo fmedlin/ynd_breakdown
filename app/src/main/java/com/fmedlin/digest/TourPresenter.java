@@ -23,12 +23,13 @@ public class TourPresenter {
 
     @Subscribe
     public void onPageSelected(PageSelectedEvent event) {
+        model.setPage(event.getPage());
         int lastPage = model.getLastPage();
         if (lastPage >= 0) {
-            view.exitScreen(lastPage);
+            view.exitScreen(lastPage, model.isPageAdvancing());
         }
 
-        view.enterScreen(event.getPage());
+        view.enterScreen(model.getPage(), model.isPageAdvancing());
     }
 
     @Subscribe

@@ -23,11 +23,11 @@ public     abstract class TourScreen {
         return layout;
     }
 
-    public void onEnter() {
+    public void onEnter(boolean isAdvancing) {
         // nop
     }
 
-    public void onExit() {
+    public void onExit(boolean isAdvancing) {
         // nop
     }
 
