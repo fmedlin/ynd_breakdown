@@ -37,8 +37,8 @@ public class TourPresenter {
         int page = event.getPage();
 
         view.scrollPage(page, page, event.getPositionOffset(), event.getPixelOffset());
-        if (page == 0) {
-            view.scrollPage(1, page, event.getPositionOffset(), 0);
+        if (page < 2) {
+            view.scrollPage(page + 1, page, event.getPositionOffset(), 0);
         }
     }
 
